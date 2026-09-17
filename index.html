@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bypass Tool Mobile</title>
+    <script src="https://jsdelivr.net"></script>
+</head>
+<body class="bg-slate-900 text-white flex items-center justify-center min-h-screen p-4">
+    <div class="w-full max-w-md bg-slate-800 rounded-2xl p-6 shadow-xl border border-slate-700">
+        <h1 class="text-2xl font-bold text-center mb-6 text-cyan-400">BYPASS KEY TOOL</h1>
+        <div class="mb-4">
+            <label class="block text-sm font-medium mb-2 text-slate-400">Dán Link Lấy Key Vào Đây:</label>
+            <input type="url" id="urlInput" placeholder="https://linkvertise.com..." class="w-full px-4 py-3 bg-slate-900 border border-slate-600 rounded-xl focus:outline-none focus:border-cyan-400 text-sm">
+        </div>
+        <button onclick="startBypass()" id="btnBypass" class="w-full bg-cyan-500 hover:bg-cyan-600 text-slate-900 font-bold py-3 rounded-xl active:scale-95 text-base">Bắt Đầu Bypass</button>
+        <div id="resultBox" class="mt-6 p-4 bg-slate-900 border border-slate-700 rounded-xl hidden">
+            <p class="text-sm text-slate-400 mb-1">Kết quả / Key của bạn:</p>
+            <span id="resultText" class="font-mono text-green-400 break-all select-all font-semibold"></span>
+        </div>
+    </div>
+    <script>
+        async function startBypass() {
+            const urlInput = document.getElementById('urlInput').value;
+            const btnBypass = document.getElementById('btnBypass');
+            const resultBox = document.getElementById('resultBox');
+            const resultText = document.getElementById('resultText');
+            if (!urlInput) return alert('Vui lòng nhập URL!');
+            btnBypass.disabled = true; btnBypass.innerText = 'Đang xử lý...'; resultBox.classList.add('hidden');
+            try {
+                // Đã điền sẵn link Render thật của bạn
+                const response = await fetch('https://onrender.com', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ url: urlInput })
+                });
+                const data = await response.json();
+                if (data.success) { resultText.innerText = data.key; resultBox.classList.remove('hidden'); } 
+                else { alert('Lỗi: ' + data.message); }
+            } catch (error) { alert('Không thể kết nối đến Server API!'); } 
+            finally { btnBypass.disabled = false; btnBypass.innerText = 'Bắt Đầu Bypass'; }
+        }
+    </script>
+</body>
+</html>
