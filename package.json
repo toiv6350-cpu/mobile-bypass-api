@@ -1,0 +1,11 @@
+{
+  "name": "mobile-bypass-api",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "node.js server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
